@@ -1,0 +1,40 @@
+$menu-color: #3b5998;
+$menu-hover-color: #8096c4;
+$menu-chevron-color: #97acda;
+.dropdown-menu,
+.nav-menu {
+  width: 100%;
+  color: $menu-color;
+  &:hover {
+    color: $menu-hover-color;
+    svg {
+      fill: $menu-chevron-color;
+    }
+  }
+  align-items: center;
+  svg {
+    fill: $menu-chevron-color;
+    margin-left: 10px;
+  }
+}
+
+.dropdown-menu {
+  display: flex;
+}
+
+.rotate-chevron-on-hover {
+  svg {
+    transition: all 0.3s ease-in-out;
+  }
+  &:hover {
+    svg {
+      transition: all 0.3s ease-in-out;
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.nav-menu,
+.dropdown-menu {
+  font-size: 0.9rem;
+}

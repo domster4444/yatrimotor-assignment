@@ -1,0 +1,26 @@
+//TODO: MIXINS IN SCSS
+//=> use mixins in scss when you want to return:-
+// 1.  a block of rulesets based on the arguments passed in
+// 2.  or just static set of rulesets
+
+// * parameterized mixins
+// @mixin square($width, $color) {
+//   width: $width;
+//   height: $width;
+//   background-color: $color;
+// }
+
+// .box {
+//   @include square(100px, red);
+// }
+
+// ---------------------------------
+
+// * non-parameterized mixins
+// @mixin fullWidth{
+//   width: 100%;
+// }
+
+// .container {
+//   @include fullWidth;
+// }

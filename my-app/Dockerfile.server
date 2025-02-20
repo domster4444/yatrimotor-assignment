@@ -1,0 +1,21 @@
+FROM node:18.18.1-alpine3.18 AS development
+
+ENV CHOKIDAR_USEPOLLING=true
+
+WORKDIR /backend-end
+# now we are in /front-end in the container
+
+# copy package.json to the workdir
+COPY package.json .
+
+# install dependencies and create node_modules
+RUN npm install
+
+# copy the rest of the files
+COPY ./server .
+
+
+# run the app inside container
+CMD ["npm", "run", "start"]
+
+

@@ -1,0 +1,25 @@
+// roboto
+
+.roboto_base {
+  font-family: 'Roboto', sans-serif;
+}
+
+.roboto_300 {
+  @extend .roboto_base;
+  font-weight: 300;
+}
+
+.roboto_400 {
+  @extend .roboto_base;
+  font-weight: 400;
+}
+
+.roboto_500 {
+  @extend .roboto_base;
+  font-weight: 500;
+}
+
+.roboto_700 {
+  @extend .roboto_base;
+  font-weight: 700;
+}

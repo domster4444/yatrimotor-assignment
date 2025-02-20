@@ -1,0 +1,24 @@
+services:
+  frontend:
+    image: frontend-image
+    container_name: frontend-container
+    build:
+      dockerfile: Dockerfile.client
+    ports:
+      - ${DOCKER_CLIENT_BINDED_PORT}:3000
+    volumes:
+      - .:/front-end # mount the current project to the frontend folder present inside container (for live changes)
+      - ./node_modules:/front-end/node_modules # this is important
+    command: npm run dev
+
+  backend:
+    image: backend-image
+    container_name: backend-container
+    build:
+      dockerfile: Dockerfile.server
+    ports:
+      - ${DOCKER_SERVER_BINDED_PORT}:5000
+    volumes:
+      - ./server:/backend-end # mount the server folder to the workingdir folder present inside container (for live changes)
+      - ./server/node_modules:/backend-end/node_modules # this is important
+    command: npm run start
