@@ -24,8 +24,9 @@ html {
   --secondary-text: #717171;
   --hover-text: #333;
   --border-radius: 0.3em;
-  --primary-color: #172b4d;
-  --accent-color: #f33c3c;
+  --primary-color: black;
+  --accent-color: #30d5c7;
+  --accent-dark-color: #183368;
   --border-color: #ececec;
   --text-color: #9b9b9b;
   --white: #ffffff;
@@ -255,10 +256,15 @@ footer ul li {
     width: 70%;
   }
 }
+@media (max-width: 450px) {
+  .blog-box {
+    min-width: 100%;
+  }
+}
 /* Blog Description Page */
 main.blog-description .post-header {
   width: 100%;
-  background-color: var(--primary-color);
+  background-color: var(--accent-color);
   height: 500px;
 }
 main.blog-description .post-container {
@@ -293,7 +299,7 @@ main.blog-description .header-img {
 main.blog-description .sub-heading {
   color: var(--primary-color);
   font-size: 1.2rem;
-  margin: 1rem 0;
+  margin-top: 5rem;
 }
 main.blog-description .post-text {
   font-size: 0.95rem;
@@ -348,5 +354,99 @@ main.blog-description .social svg.icon:active {
   }
   .header-img {
     height: 250px;
+  }
+}
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.search-bar .search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.search-bar .search-input::placeholder {
+  color: var(--primary-color);
+  font-style: italic;
+}
+@media (max-width: 768px) {
+  .search-bar .search-input {
+    max-width: 90%;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+.pagination li {
+  margin: 0 0.4rem;
+}
+.pagination li a {
+  display: block;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+.pagination li a:hover, .pagination li a:focus {
+  background-color: var(--primary-color);
+  color: white;
+  transform: scale(1.05);
+}
+.pagination .active a {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+}
+.pagination .previous a,
+.pagination .next a {
+  font-size: 14px;
+  font-weight: normal;
+  background-color: #f8f8f8;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+.pagination .previous a:hover, .pagination .previous a:focus,
+.pagination .next a:hover,
+.pagination .next a:focus {
+  background-color: var(--primary-color);
+  color: white;
+}
+.pagination .disabled a {
+  color: #ccc;
+  background-color: #f8f8f8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    flex-wrap: wrap;
+    margin: 10px 0;
+  }
+  li {
+    margin: 0 0.3rem;
+  }
+  .previous a,
+  .next a {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+  a {
+    padding: 7px 10px;
   }
 }

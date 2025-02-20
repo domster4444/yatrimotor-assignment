@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { globalConstant } from 'constant/constant';
 import Outline from '@/components/Outline';
 import axios from 'axios';
+import ReactPaginate from 'react-paginate';
 
 const BLOG_API_URL = `${globalConstant.serverURL}/api/v1/post/get-all`;
 const DEFAULT_IMAGE = 'https://i.ibb.co/vVnqvfJ/sss.jpg';
@@ -28,6 +29,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
       <div className="blog-img">
         <Image
           src={imageUrl}
+          priority
           alt={`Thumbnail for ${blog.title}`}
           width={500}
           height={300}
@@ -52,19 +54,37 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
 
 const BlogPage: NextPage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [blogsPerPage] = useState<number>(3); // Adjust the number of blogs per page
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(BLOG_API_URL);
-        setBlogs(response.data.data); // Assuming the API returns the blogs in the `data` field
+        setBlogs(response.data.data);
       } catch (error) {
-        console.error('Error fetching blogs:', error);
+        console.clear();
       }
     };
 
     fetchBlogs();
   }, []);
+
+  const filteredBlogs = blogs.filter(
+    (blog) =>
+      blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Pagination logic starts here
+  const indexOfLastBlog = (currentPage + 1) * blogsPerPage;
+  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+  const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
+
+  const handlePageChange = (selectedPage: { selected: number }) => {
+    setCurrentPage(selectedPage.selected);
+  };
 
   return (
     <Outline>
@@ -73,11 +93,37 @@ const BlogPage: NextPage = () => {
           <span className="roboto_400">My Recent Posts</span>
           <h3 className="roboto_700">Yatri's Blogs</h3>
         </div>
-        <div className="blog-container">
-          {blogs.map((blog) => (
-            <BlogCard key={blog._id} blog={blog} />
-          ))}
+
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search blogs..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input mt-6"
+          />
         </div>
+
+        <div className="blog-container">
+          {currentBlogs.length > 0 ? (
+            currentBlogs.map((blog) => <BlogCard key={blog._id} blog={blog} />)
+          ) : (
+            <p>No blogs found matching your search.</p>
+          )}
+        </div>
+
+        {/* My Blog Pagination  */}
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          pageCount={Math.ceil(filteredBlogs.length / blogsPerPage)}
+          onPageChange={handlePageChange}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          pageClassName={'page'}
+          previousClassName={'previous'}
+          nextClassName={'next'}
+        />
       </section>
     </Outline>
   );
