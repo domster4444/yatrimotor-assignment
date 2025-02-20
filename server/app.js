@@ -76,6 +76,11 @@ const morgan = require('morgan');
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+//todo: routes import
+const userRoute = require('./routes/userRoute');
+app.use('/api/v1', userRoute);
+
 //? blog imgs are stored in storage
 app.use('/storage', express.static(path.join(appRoot, 'storage')));
 
