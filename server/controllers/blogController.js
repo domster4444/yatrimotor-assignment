@@ -40,8 +40,8 @@ exports.createRecord = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-//TODO: GET ALL RECORD FOR A SCHOOL
-exports.getAllRecordForSchool = catchAsyncErrors(async (req, res, next) => {
+//TODO: GET ALL RECORD FOR A User
+exports.getAllRecordForUser = catchAsyncErrors(async (req, res, next) => {
   const record = await BlogModel.find({}).exec();
 
   if (!record) {

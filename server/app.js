@@ -79,7 +79,9 @@ if (process.env.NODE_ENV === 'development') {
 
 //todo: routes import
 const userRoute = require('./routes/userRoute');
+const blogRoute = require('./routes/blogRoute');
 app.use('/api/v1', userRoute);
+app.use('/api/v1', blogRoute);
 
 //? blog imgs are stored in storage
 app.use('/storage', express.static(path.join(appRoot, 'storage')));
