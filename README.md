@@ -75,40 +75,17 @@ Ensure you have the following installed:
 To start the frontend:
 
 ```bash
-cd my-app
-npm run build    # Using npm
-npm run start
-
- or
-
-npm run dev
+npm run dev       # Using npm
 
 # or
 yarn dev         # Using yarn
-yarn start
 
 # or
 pnpm dev         # Using pnpm
-pnpm start
+
 # or
 bun dev          # Using bun
-bun start
-```
 
----
-
-### 🛠️ Building & Production Setup
-
-To build the frontend:
-
-```bash
-npm run build      # Using npm
-# or
-yarn build         # Using yarn
-# or
-pnpm build         # Using pnpm
-# or
-bun build          # Using bun
 ```
 
 ---
