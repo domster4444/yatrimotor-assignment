@@ -4,6 +4,7 @@ import Outline from '@/components/Outline';
 import axios from 'axios';
 import DummyBlogThumbnail from 'public/assets/dummy-blog-thumbnail.png';
 import { globalConstant } from '@/constant/constant';
+import HtmlParser from '@/components/HtmlParser';
 
 interface Blog {
   _id: string;
@@ -61,7 +62,9 @@ const BlogDetailPage = ({ blog, error }: BlogDetailPageProps) => {
 
         <section className="post-content post-container">
           <h2 className="roboto_700 sub-heading">{blog.category}</h2>
-          <p className="roboto_400 post-text">{blog.description}</p>
+          <p className="roboto_400 post-text">
+            <HtmlParser>{blog.description}</HtmlParser>
+          </p>
           <div
             className="roboto_400 post-text"
             dangerouslySetInnerHTML={{ __html: blog.content }}

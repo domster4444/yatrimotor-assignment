@@ -6,6 +6,7 @@ import { globalConstant } from 'constant/constant';
 import Outline from '@/components/Outline';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
+import HtmlParser from '@/components/HtmlParser';
 
 const BLOG_API_URL = `${globalConstant.serverURL}/api/v1/post/get-all`;
 const DEFAULT_IMAGE = 'https://i.ibb.co/vVnqvfJ/sss.jpg';
@@ -45,7 +46,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
         >
           {blog.title}
         </Link>
-        <p>{blog.description.slice(0, 150)}...</p>
+        <HtmlParser>{blog.description.slice(0, 150).concat('...')}</HtmlParser>
         <Link href={`/blogDetail/${blog._id}`}>Read More</Link>
       </div>
     </div>
