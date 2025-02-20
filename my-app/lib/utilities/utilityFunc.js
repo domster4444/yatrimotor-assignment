@@ -14,3 +14,7 @@ export function generateYears() {
 export const HtmlToReactParser = (html) => {
   return parse(html);
 };
+
+export const changeDate = (dateString) => {
+  return new Date(dateString).toISOString().split('T')[0];
+};

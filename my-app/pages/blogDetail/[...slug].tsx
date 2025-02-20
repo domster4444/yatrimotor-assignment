@@ -5,6 +5,7 @@ import axios from 'axios';
 import DummyBlogThumbnail from 'public/assets/dummy-blog-thumbnail.png';
 import { globalConstant } from '@/constant/constant';
 import HtmlParser from '@/components/HtmlParser';
+import ScrollToTop from 'react-scroll-to-top';
 
 interface Blog {
   _id: string;
@@ -89,6 +90,7 @@ const BlogDetailPage = ({ blog, error }: BlogDetailPageProps) => {
           </div>
         </div>
       </main>
+      <ScrollToTop smooth />
     </Outline>
   );
 };

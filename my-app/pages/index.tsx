@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
 import { globalConstant } from 'constant/constant';
-import Outline from '@/components/Outline';
+import { changeDate } from '@/lib/utilities/utilityFunc';
+import Link from 'next/link';
+import Image from 'next/image';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
+import ScrollToTop from 'react-scroll-to-top';
+
 import HtmlParser from '@/components/HtmlParser';
+import Outline from '@/components/Outline';
+import SkeletonBlogCard from '@/components/SkeletonBlogCard';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const BLOG_API_URL = `${globalConstant.serverURL}/api/v1/post/get-all`;
 const DEFAULT_IMAGE = 'https://i.ibb.co/vVnqvfJ/sss.jpg';
@@ -25,8 +31,15 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
     ? `${globalConstant.serverURL}/storage/main-website/${blog.attachment}`
     : DEFAULT_IMAGE;
 
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: false,
+    });
+  }, []);
+
   return (
-    <div className="blog-box">
+    <div className="blog-box" data-aos="zoom-in">
       <div className="blog-img">
         <Image
           src={imageUrl}
@@ -38,7 +51,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
       </div>
       <div className="blog-text">
         <span>
-          {new Date(blog.createdAt).toLocaleDateString()} / {blog.category}
+          {changeDate(blog.createdAt)} / {blog.category}
         </span>
         <Link
           href={`/blogDetail/${blog._id}`}
@@ -57,7 +70,8 @@ const BlogPage: NextPage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [blogsPerPage] = useState<number>(3); // Adjust the number of blogs per page
+  const [blogsPerPage] = useState<number>(3);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -66,9 +80,10 @@ const BlogPage: NextPage = () => {
         setBlogs(response.data.data);
       } catch (error) {
         console.clear();
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchBlogs();
   }, []);
 
@@ -78,7 +93,6 @@ const BlogPage: NextPage = () => {
       blog.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Pagination logic starts here
   const indexOfLastBlog = (currentPage + 1) * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
@@ -90,7 +104,7 @@ const BlogPage: NextPage = () => {
   return (
     <Outline>
       <section id="blog">
-        <div className="blog-heading">
+        <div className="blog-heading" data-aos="zoom-in-down">
           <span className="roboto_400">My Recent Posts</span>
           <h3 className="roboto_700">Yatri's Blogs</h3>
         </div>
@@ -106,14 +120,17 @@ const BlogPage: NextPage = () => {
         </div>
 
         <div className="blog-container">
-          {currentBlogs.length > 0 ? (
+          {loading ? (
+            Array.from({ length: blogsPerPage }).map((_, index) => (
+              <SkeletonBlogCard key={index} />
+            ))
+          ) : currentBlogs.length > 0 ? (
             currentBlogs.map((blog) => <BlogCard key={blog._id} blog={blog} />)
           ) : (
-            <p>No blogs found matching your search.</p>
+            <p>No posts found.</p>
           )}
         </div>
 
-        {/* My Blog Pagination  */}
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}
@@ -126,6 +143,7 @@ const BlogPage: NextPage = () => {
           nextClassName={'next'}
         />
       </section>
+      <ScrollToTop smooth />
     </Outline>
   );
 };
