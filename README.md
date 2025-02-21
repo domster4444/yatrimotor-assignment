@@ -16,7 +16,7 @@ To get started with the project, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/yatri-motors-blog-app.git
+   git clone https://github.com/domster4444/yatrimotor-assignment.git
    ```
 
 2. Navigate into the project directory's my-app folder:
